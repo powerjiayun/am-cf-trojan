@@ -15,7 +15,7 @@ jobs:
     - name: Checkout target repository
       uses: actions/checkout@v2
       with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
+        token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Pull from source repository
       run: |
@@ -26,4 +26,4 @@ jobs:
         git reset --hard source/main
         git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/ansoncloud8/am-cf-trojan.git HEAD:main --force
       env:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
