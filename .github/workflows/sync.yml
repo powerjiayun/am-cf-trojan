@@ -15,9 +15,11 @@ jobs:
     - name: Checkout target repository
       uses: actions/checkout@v2
       with:
-        token: ${{ secrets.GITHUB_TOKEN }}
+        token: ${{ secrets.REPO_ACCESS_TOKEN }}
 
     - name: Pull from source repository
+      env:
+        REPO_ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         git config --global user.name "github-actions[bot]"
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
