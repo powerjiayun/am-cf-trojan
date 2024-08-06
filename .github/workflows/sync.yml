@@ -27,3 +27,4 @@ jobs:
         git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/ansoncloud8/am-cf-trojan.git HEAD:main --force
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
