@@ -19,9 +19,11 @@ jobs:
 
     - name: Pull from source repository
       run: |
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
         git remote add source https://github.com/ansoncloud8/am-trojan.git
         git fetch source
         git reset --hard source/main
-        git push origin main --force
+        git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/ansoncloud8/am-cf-trojan.git HEAD:main --force
       env:
         github-token: ${{ secrets.GITHUB_TOKEN }}
