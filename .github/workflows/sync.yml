@@ -1,0 +1,25 @@
+name: Sync Repos
+
+on:
+  push:
+    branches:
+      - main  # 监听源仓库的 main 分支
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout source repository
+      uses: actions/checkout@v2
+      with:
+        repository: ansoncloud8/am-trojan  # 替换为源仓库的路径
+
+    - name: Sync to target repository
+      run: |
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        git remote add target https://github.com/ansoncloud8/am-cf-trojan.git  # 替换为目标仓库的路径
+        git push target main --force
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
