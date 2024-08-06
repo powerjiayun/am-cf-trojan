@@ -1,33 +1,30 @@
-name: Sync am-trojan Repository
+name: Sync am-trojan to am-cf-trojan
 
 on:
-  schedule:
-    - cron: '0 0 * * *' # 每天运行一次
-  workflow_dispatch:
+  push:
+    branches:
+      - main # 或者你希望同步的分支
 
 jobs:
   sync:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout this repository
-      uses: actions/checkout@v2
+      - name: Checkout Repository B
+        uses: actions/checkout@v2
 
-    - name: Clone the source repository
-      run: git clone --depth=1 https://github.com/ansoncloud8/am-trojan.git source-repo
+      - name: Configure Git
+        run: |
+          git config --global user.name 'github-action'
+          git config --global user.email 'github-action@example.com'
 
-    - name: Remove the .git directory
-      run: rm -rf source-repo/.git
-
-    - name: Copy files to the working directory
-      run: cp -r source-repo/* .
-
-    - name: Commit and push changes
-      run: |
-        git config --global user.name 'github-actions[bot]'
-        git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com'
-        git add .
-        git commit -m 'Sync from ansoncloud8/am-trojan'
-        git push origin main
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Checkout Repository A
+        run: |
+          git clone --branch main https://github.com/ansoncloud8/am-trojan.git repoA
+          cd repoA
+          git remote add repoB https://github.com/ansoncloud8/am-cf-trojan.git
+          git fetch repoB
+          git reset --hard repoB/main
+          git push origin main --force
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
