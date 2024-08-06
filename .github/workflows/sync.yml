@@ -1,31 +1,34 @@
-name: Sync from am-trojan
+name: Sync am-trojan Repository
 
 on:
   schedule:
-    - cron: '0 0 * * *'  # 每天同步一次（可以根据需要调整时间）
-  push:
-    branches:
-      - main  # 可选：也可以在 main 分支有变动时触发同步
+    - cron: '0 0 * * *' # 每天运行一次
+  workflow_dispatch:
 
 jobs:
   sync:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout target repository
+    - name: Checkout this repository
       uses: actions/checkout@v2
-      with:
-        token: ${{ secrets.REPO_ACCESS_TOKEN }}
 
-    - name: Pull from source repository
-      env:
-        REPO_ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Clone the source repository
       run: |
-        git config --global user.name "github-actions[bot]"
-        git config --global user.email "github-actions[bot]@users.noreply.github.com"
-        git remote add source https://github.com/ansoncloud8/am-trojan.git
-        git fetch source
-        git reset --hard source/main
-        git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/ansoncloud8/am-cf-trojan.git HEAD:main --force
+        git clone --depth=1 https://github.com/ansoncloud8/am-trojan.git source-repo
+        cd source-repo
+        git archive --format=tar --output=../source-repo.tar HEAD
 
+    - name: Extract the source repository
+      run: |
+        tar -xf source-repo.tar -C .
 
+    - name: Commit and push changes
+      run: |
+        git config --global user.name 'github-actions[bot]'
+        git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com'
+        git add .
+        git commit -m 'Sync from ansoncloud8/am-trojan'
+        git push origin main
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
