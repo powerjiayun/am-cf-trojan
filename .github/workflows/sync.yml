@@ -16,8 +16,11 @@ jobs:
     - name: Clone the source repository
       run: git clone --depth=1 https://github.com/ansoncloud8/am-trojan.git source-repo
 
-    - name: Sync files to the working directory
-      run: rsync -av --progress source-repo/ . --exclude .git
+    - name: Remove the .git directory
+      run: rm -rf source-repo/.git
+
+    - name: Copy files to the working directory
+      run: cp -r source-repo/* .
 
     - name: Commit and push changes
       run: |
