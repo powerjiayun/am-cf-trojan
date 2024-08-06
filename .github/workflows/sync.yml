@@ -14,14 +14,10 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Clone the source repository
-      run: |
-        git clone --depth=1 https://github.com/ansoncloud8/am-trojan.git source-repo
-        cd source-repo
-        git archive --format=tar --output=../source-repo.tar HEAD
+      run: git clone --depth=1 https://github.com/ansoncloud8/am-trojan.git source-repo
 
-    - name: Extract the source repository
-      run: |
-        tar -xf source-repo.tar -C .
+    - name: Copy files to the working directory
+      run: cp -r source-repo/* .
 
     - name: Commit and push changes
       run: |
