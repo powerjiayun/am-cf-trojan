@@ -1,5 +1,8 @@
-# am-cf-trojan
-https://github.com/ansoncloud8/am-cf-trojan
+# [am-cf-trojan](https://github.com/ansoncloud8/am-cf-trojan)
+▶️ **新人[YouTube](https://youtube.com/@AM_CLUB)** 需要您的支持，请务必帮我**点赞**、**关注**、**打开小铃铛**，***十分感谢！！！*** ✅
+</br>🎁 不要只是下载或Fork。请 **follow** 我的GitHub、给我所有项目一个 **Star** 星星（拜托了）！你的支持是我不断前进的动力！ 💖
+</br>✅**解锁更多技术请访问[【个人博客】](https://am.809098.xyz)**
+#
 
 这是基于CF平台的脚本，部署Trojan 配置信息转换为订阅内容。可以方便地将 Trojan 节点配置信息转换到 Clash 或 Singbox 或Quantumult X等工具中。
 
